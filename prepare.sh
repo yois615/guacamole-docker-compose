@@ -6,8 +6,6 @@ then
 	echo "docker daemon not running, will exit here!"
 	exit
 fi
-echo "Creating home directory for GuACAMOLE_HOME"
-mkdir -p ./home/extensions >/dev/null 2>&1
 echo "Preparing folder init and creating ./init/initdb.sql"
 mkdir ./init >/dev/null 2>&1
 mkdir -p ./nginx/ssl >/dev/null 2>&1
