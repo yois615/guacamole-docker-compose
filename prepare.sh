@@ -6,6 +6,11 @@ then
 	echo "docker daemon not running, will exit here!"
 	exit
 fi
+echo "Configuring TOTP"
+mkdir -p ./home/extensions >/dev/null 2>&1
+wget https://dlcdn.apache.org/guacamole/1.4.0/binary/guacamole-auth-totp-1.4.0.tar.gz
+tar -xf guacamole-auth-totp-1.4.0.tar.gz
+mv ./guacamole-auth-totp-1.4.0/guacamole-auth-totp-1.4.0.jar ./home/extensions
 echo "Preparing folder init and creating ./init/initdb.sql"
 mkdir ./init >/dev/null 2>&1
 mkdir -p ./nginx/ssl >/dev/null 2>&1
