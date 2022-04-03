@@ -129,6 +129,7 @@ services:
       POSTGRES_HOSTNAME: postgres
       POSTGRES_PASSWORD: 'ChooseYourOwnPasswordHere1234'
       POSTGRES_USER: guacamole_user
+      GUACAMOLE_HOME: /usr/share/guacamole-home/
     image: guacamole/guacamole
     links:
     - guacd
@@ -140,6 +141,8 @@ services:
 ## enable next line when using nginx
     - 8080/tcp
     restart: always
+    volumes:
+    - ./home:/usr/share/guacamole-home
 
 ########### optional ##############
   # nginx
