@@ -150,18 +150,28 @@ services:
    restart: always
    image: nginx
    volumes:
-   - ./nginx/ssl/self.cert:/etc/nginx/ssl/self.cert:ro
-   - ./nginx/ssl/self-ssl.key:/etc/nginx/ssl/self-ssl.key:ro
+   - ./nginx/certbot/conf:/etc/letsencrypt:ro
+   - ./nginx/certbot/www:/var/www/certbot:ro
    - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
    - ./nginx/mysite.template:/etc/nginx/conf.d/default.conf:ro
    ports:
-   - 8443:443
+   - 443:443
+   - 80:80
    links:
    - guacamole
    networks:
      guacnetwork_compose:
    # run nginx
-   command: /bin/bash -c "nginx -g 'daemon off;'"
+   command: "/bin/bash -c 'while :; do sleep 72h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 # nginx-debug-mode
 #   command: /bin/bash -c "nginx-debug -g 'daemon off;'"
+########## Certbot ###################
+  certbot:
+   container_name: certbot_guacamole
+   image: certbot/certbot
+   restart: always
+   volumes:
+   - ./nginx/certbot/conf:/etc/letsencrypt
+   - ./nginx/certbot/www:/var/www/certbot
+   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 168h & wait $${!}; done;'"
 ####################################################################################
