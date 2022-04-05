@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name localhost;
+    server_name example.example;
     server_tokens off;
 
     location /.well-known/acme-challenge/ {
@@ -60,4 +60,14 @@ server {
         root   /usr/share/nginx/html;
     }
 
+}
+
+server {
+    listen 80 default_server;
+    return 444;
+}
+
+server {
+    listen 443 default_server;
+    return 444;
 }
