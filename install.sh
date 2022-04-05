@@ -13,8 +13,8 @@ if ! [ -x "$(command -v docker-compose)" ]; then
 fi
 
 
-read -p 'Domain names (space delimited): ' domain_name
-read -p 'Email address: ' email_address
+read -p 'Domain name for SSL and nginx: ' domain_name
+read -p 'Email address for LetsEncrypt: ' email_address
 read -p 'Use Guacamole TOTP extension? (Y/n) ' use_totp
 
 if [ "$use_totp" != 'n' ] && [ "$use_totp" != 'N' ]; then
