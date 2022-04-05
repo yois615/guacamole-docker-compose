@@ -1,6 +1,6 @@
 # Guacamole with docker-compose
 This project is a fork of `https://github.com/boschkundendienst/guacamole-docker-compose`.
-The goal of this fork is to require TOTP authentication using the native Guacamole TOTP extension, to enforce secure Postgres passwords, and to secure nginx with LetsEncrypt and auto renewal by using certbot.
+The goal of this fork is to require TOTP authentication using the native Guacamole TOTP extension, to enforce secure Postgres passwords, and to secure nginx with LetsEncrypt and auto renewal by using certbot.  We also secure nginx by rejecting any traffic not accessing the server with it's FQDN with a 444 response.
 
 ## Prerequisites
 You need a working **docker** installation and **docker-compose** running on your machine.
@@ -19,7 +19,7 @@ You will be asked 3 questions:
 2. The email address to associate with LetsEncrypt (optional)
 3. If you want to download and enable the TOTP extension for Guacamole
 
-After the install, your guacamole server should now be available at `https://DNS of your server/`. The default username is `guacadmin` with password `guacadmin`.  If you enabled TOTP, you will be prompted to set up your authenticator with a QR code.
+After the install, your guacamole server should now be available at `https://DNS of your server/`. Accessing via the IP address will not work as nginx rejects the traffic with 444. The default username is `guacadmin` with password `guacadmin`.  If you enabled TOTP, you will be prompted to set up your authenticator with a QR code.
 
 ## About Guacamole
 Apache Guacamole is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH. It is called clientless because no plugins or client software are required. Thanks to HTML5, once Guacamole is installed on a server, all you need to access your desktops is a web browser.
