@@ -14,12 +14,17 @@ cd guacamole-docker-compose
 ./install.sh
 ~~~
 
-Your guacamole server should now be available at `https://DNS of your server/`. The default username is `guacadmin` with password `guacadmin`.
+You will be asked 3 questions:
+1. The DNS hostname of this server to be used in the SSL Certificate
+2. The email address to associate with LetsEncrypt (optional)
+3. If you want to download and enable the TOTP extension for Guacamole
+
+After the install, your guacamole server should now be available at `https://DNS of your server/`. The default username is `guacadmin` with password `guacadmin`.  If you enabled TOTP, you will be prompted to set up your authenticator with a QR code.
 
 ## About Guacamole
-Apache Guacamole (incubating) is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH. It is called clientless because no plugins or client software are required. Thanks to HTML5, once Guacamole is installed on a server, all you need to access your desktops is a web browser.
+Apache Guacamole is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH. It is called clientless because no plugins or client software are required. Thanks to HTML5, once Guacamole is installed on a server, all you need to access your desktops is a web browser.
 
-It supports RDP, SSH, Telnet and VNC and is the fastest HTML5 gateway I know. Checkout the projects [homepage](https://guacamole.incubator.apache.org/) for more information.
+It supports RDP, SSH, Telnet and VNC and is the fastest HTML5 gateway I know. Checkout the projects [homepage](https://guacamole.apache.org/) for more information.
 
 ## Details
 To understand some details let's take a closer look at parts of the `docker-compose.yml` file:
@@ -52,7 +57,7 @@ To reset the database to the beginning, just run `./reset.sh`.  This will not re
 
 ## WOL
 
-Wake on LAN (WOL) does not work and I will not fix that because it is beyound the scope of this repo. But [zukkie777](https://github.com/zukkie777) who also filed [this issue](https://github.com/boschkundendienst/guacamole-docker-compose/issues/12) fixed it. You can read about it on the [Guacamole mailing list](http://apache-guacamole-general-user-mailing-list.2363388.n4.nabble.com/How-to-docker-composer-for-WOL-td9164.html)
+Wake on LAN (WOL) does not work and I will not fix that because it is beyound the scope of this repo. But [zukkie777](https://github.com/zukkie777) who also filed [this issue](https://github.com/boschkundendienst/guacamole-docker-compose/issues/12) fixed it. You can read about it on the [Guacamole mailing list](https://lists.apache.org/thread/tzwc02wxzkqfy48soj3ztsjqjh17tynl)
 
 **Disclaimer**
 
