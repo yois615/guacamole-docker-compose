@@ -26,8 +26,21 @@ Apache Guacamole is a clientless remote desktop gateway. It supports standard pr
 
 It supports RDP, SSH, Telnet and VNC and is the fastest HTML5 gateway I know. Checkout the projects [homepage](https://guacamole.apache.org/) for more information.
 
-## Details
-To understand some details let's take a closer look at parts of the `docker-compose.yml` file:
+## Custom Guacaomle Extensions
+This project makes use of the GUACAMOLE_HOME environment variable offered by the guacamole image to enable the use of custom extensions.  See [this page](https://guacamole.apache.org/doc/gug/guacamole-docker.html#custom-extensions-and-guacamole-home) for more details.  If selecting TOTP within install.sh, the script will download the TOTP extension and place the JAR file in ./home/extensions.  The script can be modified to include the custom extensions of your choice, as well as the customizations of guacamole.properties and placing that file in ./home.
+
+
+## install.sh
+`install.sh` is a script that creates creates the necessary database initialization file for postgres `./init/initdb.sql` by downloading the docker image `guacamole/guacamole` and starting it like this:
+
+~~~bash
+docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./init/initdb.sql
+~~~
+
+`install.sh` also creates the nginx and certbot configurations based on the domain name entered.  Finally, it will issue `docker-compose up -d` to start all of the containers.
+
+## docker-compose details
+To understand some details of how the containers are set up and interact, let's take a closer look at parts of the `docker-compose.yml` file:
 
 ### Networking
 The following part of docker-compose.yml will create a network with name `guacnetwork_compose` in mode `bridged`.
@@ -41,22 +54,10 @@ networks:
 ...
 ~~~
 
-## install.sh
-`install.sh` is a small script that creates `./init/initdb.sql` by downloading the docker image `guacamole/guacamole` and start it like this:
-
-~~~bash
-docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./init/initdb.sql
-~~~
-
-It creates the necessary database initialization file for postgres.
-
-`install.sh` also creates the certbot configuration
-
 ## reset.sh
 To reset the database to the beginning, just run `./reset.sh`.  This will not reset certbot data or reset the PostgresDB passwords.
 
 ## WOL
-
 Wake on LAN (WOL) does not work and I will not fix that because it is beyound the scope of this repo. But [zukkie777](https://github.com/zukkie777) who also filed [this issue](https://github.com/boschkundendienst/guacamole-docker-compose/issues/12) fixed it. You can read about it on the [Guacamole mailing list](https://lists.apache.org/thread/tzwc02wxzkqfy48soj3ztsjqjh17tynl)
 
 **Disclaimer**
