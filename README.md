@@ -17,7 +17,7 @@ cd guacamole-docker-compose
 You will be asked 3 questions:
 1. The DNS hostname of this server to be used in the SSL Certificate
 2. The email address to associate with LetsEncrypt (optional)
-3. If you want to download and enable the TOTP extension for Guacamole
+3. If you want to enable the TOTP extension for Guacamole
 
 After the install, your guacamole server should now be available at `https://DNS of your server/`. Accessing via the IP address will not work as nginx rejects the traffic with 444. The default username is `guacadmin` with password `guacadmin`.  If you enabled TOTP, you will be prompted to set up your authenticator with a QR code.
 
@@ -26,9 +26,11 @@ Apache Guacamole is a clientless remote desktop gateway. It supports standard pr
 
 It supports RDP, SSH, Telnet and VNC and is the fastest HTML5 gateway I know. Checkout the projects [homepage](https://guacamole.apache.org/) for more information.
 
-## Custom Guacaomle Extensions
-This project makes use of the GUACAMOLE_HOME environment variable offered by the guacamole image to enable the use of custom extensions.  See [this page](https://guacamole.apache.org/doc/gug/guacamole-docker.html#custom-extensions-and-guacamole-home) for more details.  If selecting TOTP within install.sh, the script will download the TOTP extension and place the JAR file in ./home/extensions.  The script can be modified to include the custom extensions of your choice, as well as the customizations of guacamole.properties and placing that file in ./home.
+## Postgresql and TOTP extensions
+The Guacamole docker images contain builds of several built-in extensions that can be enabled via environment variable.  Although we chose TOTP for this project, `docker-compose.yml` and `install.sh` can be easily modified to suit your needs.  Consult [this section](https://github.com/apache/guacamole-client/blob/5a95861f02e8e8d6db8126df1bdc888509a3ac6e/guacamole-docker/bin/start.sh#L1012) of the source code for available extensions and the associated variables.
 
+## Custom Guacaomle Extensions
+This project makes use of the GUACAMOLE_HOME environment variable offered by the guacamole image to enable the use of custom extensions.  See [this page](https://guacamole.apache.org/doc/gug/guacamole-docker.html#custom-extensions-and-guacamole-home) for more details. The script can be modified to include the custom extensions of your choice, as well as the customizations of guacamole.properties and placing that file in ./home.
 
 ## install.sh
 `install.sh` is a script that creates creates the necessary database initialization file for postgres `./init/initdb.sql` by downloading the docker image `guacamole/guacamole` and starting it like this:

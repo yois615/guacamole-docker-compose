@@ -18,11 +18,8 @@ read -p 'Email address for LetsEncrypt: ' email_address
 read -p 'Use Guacamole TOTP extension? (Y/n) ' use_totp
 
 if [ "$use_totp" != 'n' ] && [ "$use_totp" != 'N' ]; then
-	echo "Configuring TOTP"
-	mkdir -p ./home/extensions >/dev/null 2>&1
-	wget https://dlcdn.apache.org/guacamole/1.4.0/binary/guacamole-auth-totp-1.4.0.tar.gz
-	tar -xf guacamole-auth-totp-1.4.0.tar.gz
-	mv ./guacamole-auth-totp-1.4.0/guacamole-auth-totp-1.4.0.jar ./home/extensions
+	echo "Enabling TOTP"
+	sed -i 's/#TOTP_ENABLED/TOTP_ENABLED/g' docker-compose.yml
 fi
 
 echo "Creating random database password..."
